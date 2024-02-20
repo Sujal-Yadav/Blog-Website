@@ -8,7 +8,7 @@ function App() {
 
   return (
       <BrowserRouter>
-      {/* <Navbar /> */}
+      <Navbar />
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />

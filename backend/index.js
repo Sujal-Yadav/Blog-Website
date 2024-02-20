@@ -56,7 +56,7 @@ app.post('/login', async function (req, res) {
 
 })
 
-app.get('/getBlog', async function(req, res) {
+app.get('/getBlog', auth, async function(req, res) {
     const blogs = await User.find({});
     res.status(200).send(blogs);
 }) 

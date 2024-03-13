@@ -22,7 +22,7 @@ const HomePage = () => {
     }, []);
 
     return (
-        <div className='md:grid md:grid-cols-3 grid grid-cols-2 md:p-4 p-2'>
+        <div className='md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid lg:grid-cols-3'>
             {blogs.map((blog, index) => (
                 <Blog key={index} email={blog.email} password={blog.password} />
             ))}

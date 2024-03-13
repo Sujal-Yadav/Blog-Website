@@ -2,14 +2,14 @@ import { useState } from "react";
 import { AiOutlineClose, AiOutlineHome, AiOutlineMenu } from 'react-icons/ai'
 
 export default function Navbar() {
-    const [navbar, setNavbar] = useState(false);
+    const [navbar, setNavbar] = useState(true);
     function handleNavbar() {
         setNavbar(!navbar);
     }
 
     return (
         <div className='flex justify-between items-center h-20 mx-auto max-w-screen-2xl text-white px-4'>
-            <div onClick={handleNavbar} className="md:hidden flex items-center justify-center p-6">
+            <div onClick={handleNavbar} className="md:hidden items-center justify-center p-6 block">
                 {!navbar ? <AiOutlineClose size={24}/> : <AiOutlineMenu size={24}/>}
             </div>
             <h1 className='w-full text-5xl font-bold text-[#00df9a]'>
@@ -22,6 +22,17 @@ export default function Navbar() {
                 <li className='p-4'>Contacts</li>
                 <li className='p-4'>About</li>
             </ul>
+
+            <div className={!navbar ? 'fixed left-0 w-full text-lg backdrop-blur-md  h-auto text-center mt-20 top-0 ease-in-out duration-500' : 'fixed top-[-100%]'}>
+            <ul className='block md:hidden'>
+                <li className='p-4 mx-10 border-b-2 border-gray-500 text-xl font-semibold'>Home</li>
+                <li className='p-4 mx-10 border-b-2 border-gray-500 text-xl font-semibold'>Blogs</li>
+                <li className='p-4 mx-10 border-b-2 border-gray-500 text-xl font-semibold'>Resources</li>
+                <li className='p-4 mx-10 border-b-2 border-gray-500 text-xl font-semibold'>Contacts</li>
+                <li className='p-4'>About</li>
+            </ul>
+
+            </div>
 
             
         </div>

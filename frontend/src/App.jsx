@@ -7,14 +7,17 @@ import Navbar from "./components/Navbar";
 function App() {
 
   return (
+    <div className="dark:bg-slate-950 bg-white">
       <BrowserRouter>
-      <Navbar />
+        <Navbar />
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
+    </div>
+
   )
 }
 

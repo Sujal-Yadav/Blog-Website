@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineClose, AiOutlineHome, AiOutlineMenu } from 'react-icons/ai'
+import DarkModeToggle from "./DarkModeToggle";
 
 export default function Navbar() {
     const [navbar, setNavbar] = useState(true);
@@ -8,7 +9,7 @@ export default function Navbar() {
     }
 
     return (
-        <div className='flex justify-between items-center h-20 mx-auto max-w-screen-2xl text-white px-4'>
+        <div className='flex justify-between items-center h-20 mx-auto max-w-screen-2xl border-b border-white-800 text-black dark:border-slate-800 dark:text-white px-4'>
             <div onClick={handleNavbar} className="md:hidden items-center justify-center p-6 block">
                 {!navbar ? <AiOutlineClose size={24}/> : <AiOutlineMenu size={24}/>}
             </div>
@@ -22,6 +23,7 @@ export default function Navbar() {
                 <li className='p-4'>Contacts</li>
                 <li className='p-4'>About</li>
             </ul>
+            <DarkModeToggle />
 
             <div className={!navbar ? 'fixed left-0 w-full text-lg backdrop-blur-md  h-auto text-center mt-20 top-0 ease-in-out duration-500' : 'fixed top-[-100%]'}>
             <ul className='block md:hidden'>

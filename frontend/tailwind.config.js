@@ -8,4 +8,11 @@ export default {
     extend: {},
   },
   plugins: [],
+  darkMode: 'class',
+  variants: {
+    extend: {
+      backgroundColor: ['dark'],
+      textColor: ['dark'],
+    },
+  },
 }

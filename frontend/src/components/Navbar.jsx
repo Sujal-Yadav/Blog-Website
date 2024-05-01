@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AiOutlineClose, AiOutlineHome, AiOutlineMenu } from 'react-icons/ai'
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import DarkModeToggle from "./DarkModeToggle";
 
 export default function Navbar() {

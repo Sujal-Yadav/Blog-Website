@@ -4,8 +4,8 @@ import axios from "axios";
 
 const HomePage = () => {
     const [blogs, setBlogs] = useState([{
-        email: '',
-        password: ''
+        title: '',
+        description: ''
     }]);
 
     useEffect(() => {
@@ -22,11 +22,30 @@ const HomePage = () => {
     }, []);
 
     return (
-        <div className='md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid lg:grid-cols-3'>
-            {blogs.map((blog, index) => (
-                <Blog key={index} email={blog.email} password={blog.password} />
-            ))}
-        </div>
+        <>
+            <div className="grid grid-cols-2 h-screen dark:text-white">
+                <div className="col-span-1">
+                    <div className="mt-20 text-5xl p-8 font-bold">
+                        Create a blog
+                    </div>
+                    <p className="text-xl px-8">
+                        Share your story with the world. Stand out with a professionally-designed blog website that can be customized to fit your brand. Build, manage, and promote your blog with Squarespace’s built-in suite of design and marketing tools.
+                    </p>
+                    <button className="mx-8 my-10 px-6 py-4 text-xl border rounded-md font-bold bg-[#00df9a]">Get started</button>
+                </div>
+                <div className="col-span-1 pl-10">
+                    <img className="mt-28 w-10/12" src="src\assets\blog.jpeg" alt="" />
+                </div>
+
+            </div>
+            <div className="text-7xl flex justify-center dark:text-white font-bold">Blogs to read</div>
+            <div className='md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid lg:grid-cols-3'>
+
+                {blogs.map((blog, index) => (
+                    <Blog key={index} title={blog.title} description={blog.description} />
+                ))}
+            </div>
+        </>
     );
 };
 

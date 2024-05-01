@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 const {auth} = require('./middleware');
 const jwtPassword = "secret";
 const bodyParser = require("body-parser");
+const { blogs, Blog } = require('./blog');
 var jsonParser = bodyParser.json();
 // var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(jsonParser);
@@ -57,11 +58,29 @@ app.post('/login', async function (req, res) {
 })
 
 app.get('/getBlog', auth, async function(req, res) {
-    const blogs = await User.find({});
+    const blogs = await Blog.find({});
     res.status(200).send(blogs);
 })
 
+app.post('/postBlog', auth, async function(req, res){
+    const createPayload = req.body;
+    const blogId = await Blog.create({
+        title: createPayload.title,
+        description: createPayload.description
+    })
+    const userId = req.userId;
+    console.log(userId);
+    console.log(blogId._id);
+    await User.findByIdAndUpdate(
+        userId,
+        {$push: {blogIds: blogId}},
+        {new: true}
+    )
 
+    res.json({
+        msg: "Blog created Successfully."
+    })
+})
 
 app.listen(3000, () => {
     console.log('Server listening on port 3000');

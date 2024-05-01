@@ -7,8 +7,8 @@ const blogsData = mongoose.Schema({
     description: String
 })
 
-const blogs = mongoose.model('blogs', userData);
+const Blog = mongoose.model('blogs', blogsData);
 
 module.exports = {
-    User
+    Blog
 } 

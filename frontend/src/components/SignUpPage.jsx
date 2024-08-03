@@ -42,7 +42,7 @@ export default function SignUpPage() {
 
     return (
         <>
-            <Navbar user={true} />
+            <Navbar user={false} />
             <div className="h-screen">
                 <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-10 dark:bg-slate-950 border dark:border-slate-800 p-6 rounded-md">
                     <h2 className="text-3xl font-bold text-gray-900 dark:text-white pb-2">

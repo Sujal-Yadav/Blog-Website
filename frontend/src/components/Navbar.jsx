@@ -18,7 +18,7 @@ export default function Navbar(props) {
     useEffect(() => {
         async function renderName() {
             try {
-                const response = await axios.get('http://localhost:3000/profile', {
+                const response = await axios.get('http://localhost:3000/userAuth', {
                     headers: {
                         'Authorization': localStorage.getItem('token')
                     }
@@ -34,12 +34,6 @@ export default function Navbar(props) {
 
         { props.user && renderName() }
     }, [])
-
-    function handleLogout() {
-        localStorage.removeItem('token');
-        setUserProfile(false);
-        navigate('/');
-    }
 
     return (
         <div className={props.position ? 'flex justify-between items-center fixed h-20 mx-auto max-w-screen-2xl w-full border-b border-white-800 bg-white dark:bg-slate-950 text-black dark:border-slate-800 dark:text-white px-4' : 'flex justify-between items-center h-20 mx-auto max-w-screen-2xl border-b border-white-800 text-black dark:border-slate-800 dark:text-white px-4'}>

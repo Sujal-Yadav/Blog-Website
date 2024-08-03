@@ -1,10 +1,62 @@
-import { useSearchParams } from "react-router-dom";
+import { renderMatches, useNavigate, useNavigation, useSearchParams } from "react-router-dom";
 import Navbar from "./Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Profile() {
     const [sidebar, setSidebar] = useState(false);
+    const [profile, setProfile] = useState(false);
+    const [image, setImage] = useState(null);
+    const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+    const navigate = useNavigate();
+
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+    };
+
+    const handleUpload = async () => {
+        const formData = new FormData();
+        formData.append('image', image);
+        // formData.append('userId', userId);
+
+        try {
+            const res = await axios.post('http://localhost:3000/uploadUserImage', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    "Authorization": localStorage.getItem('token'),
+                },
+            });
+            setUploadedImageUrl(res.data.user.profileImage);
+            console.log(res.data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    useEffect(() => {
+        async function renderProfile() {
+            try {
+                const response = await axios.get('http://localhost:3000/profile', {
+                    headers: {
+                        'Authorization': localStorage.getItem('token')
+                    }
+                })
+                const name = response.data;
+                setProfile(true);
+
+            } catch (error) {
+                alert(error.response.data.msg);
+            }
+        }
+        renderProfile();
+    }, []);
+
+    function handleLogout() {
+        localStorage.removeItem('token');
+        setProfile(false);
+        navigate('/');
+    }
 
     return (
         <>
@@ -23,13 +75,13 @@ export default function Profile() {
                         <div class="px-3 py-4">
                             <ul class="space-y-2 font-medium">
                                 <li>
-                                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <Link to='/home' class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                         <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                                             <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                                             <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                                         </svg>
                                         <span class="ms-3">Home</span>
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
                                     <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -67,13 +119,13 @@ export default function Profile() {
                                 </li>
 
                                 <li>
-                                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
                                             <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
                                             <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
                                         </svg>
-                                        <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
+                                        <button class="flex ms-3 justify-start whitespace-nowrap" onClick={handleLogout}>Logout</button>
                                     </a>
                                 </li>
                             </ul>
@@ -86,11 +138,21 @@ export default function Profile() {
                         <div className="text-black dark:text-white text-3xl py-5">User Setting</div>
                         <div class="grid grid-cols-6 gap-4">
                             <div class="flex col-span-2 row-span-2 rounded-lg bg-gray-200 h-fit p-8 dark:bg-gray-800">
-                                <img className='h-32 rounded-lg' src="src/assets/male.jpg" alt="" />
+                                {/* <img className='h-32 rounded-lg' src="src/assets/male.jpg" alt="" /> */}
+                                {/* <input type="file" className="h-32 w-32 border-2" onChange={handleImageChange} /> */}
+                                <input
+                                    type="file"
+                                    
+                                    style={{ display: 'none' }}
+                                    onChange={handleImageChange}
+                                />
+                                {uploadedImageUrl &&
+                                    <img className='h-32 w-32 rounded-lg' src={uploadedImageUrl} alt="" />
+                                }
                                 <div className="flex flex-col">
                                     <div className="text-black dark:text-white text-2xl font-semibold mx-4">Sujal Yadav</div>
                                     <div className="text-black dark:text-gray-400 mx-4">Software Developer</div>
-                                    <button type="button" class="text-white inline-flex items-center mx-4 mt-7 hover:text-white border border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-400 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">
+                                    <button onClick={handleUpload} class="text-white inline-flex items-center mx-4 mt-7 hover:text-white border border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-400 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">
                                         <svg class="w-[20px] h-[20px] mr-1 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M12 3a1 1 0 0 1 .78.375l4 5a1 1 0 1 1-1.56 1.25L13 6.85V14a1 1 0 1 1-2 0V6.85L8.78 9.626a1 1 0 1 1-1.56-1.25l4-5A1 1 0 0 1 12 3ZM9 14v-1H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-4v1a3 3 0 1 1-6 0Zm8 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd" />
                                         </svg>
@@ -170,7 +232,7 @@ export default function Profile() {
                                     </button>
                                 </form>
                             </div>
-                            
+
                             <div class="p-8 col-span-4 row-span-3 items-center rounded-lg bg-gray-50 h-fit dark:bg-gray-800">
                                 <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">General Information</h2>
                                 <form action="#">

@@ -53,7 +53,6 @@ export default function SignUpPage() {
 
     return (
         <>
-<<<<<<< Updated upstream
             <Navbar user={true} />
             <div className="h-screen">
                 <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-10 dark:bg-slate-950 border dark:border-slate-800 p-6 rounded-md">
@@ -98,23 +97,6 @@ export default function SignUpPage() {
                     <div className="md:grid md:grid-cols-4 gap-4 grid grid-cols-4">
                         <div className="md:mt-2 mt-2 md:col-span-2 col-span-2">
                             <button type="submit" className="text-white dark:text-slate-950 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign Up</button>
-=======
-            <Navbar user={false} />
-            <div className="h-screen sm:h-dvh">
-                <div className="flex grid-cols-2 justify-around items-center ml-4">
-                    <div className="md:flex hidden col-span-1"><Lottie
-                        options={defaultOptions}
-                        height={600}
-                        width={600}
-                    /></div>
-                    <form onSubmit={handleSubmit} className="mt-10 col-span-1 w-3/6 mr-10 dark:bg-slate-950 border dark:border-slate-800 p-6 rounded-md">
-                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white pb-2">
-                            Sign up to Blogsite
-                        </h2>
-                        <div className="mb-5">
-                            <label htmlFor="firstname" className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Full Name</label>
-                            <input type="text" name="name" value={formData.name} onChange={handleChange} id="firstname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-950 dark:border-slate-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Name" autoComplete="name" required />
->>>>>>> Stashed changes
                         </div>
 
                         <div className="mb-5">
@@ -167,9 +149,10 @@ export default function SignUpPage() {
                                 </button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
+
         </>
     );
 }

@@ -4,53 +4,18 @@ const { User } = require('./db')
 const app = express();
 const cors = require('cors');
 var jwt = require('jsonwebtoken');
-<<<<<<< Updated upstream
 const {auth} = require('./middleware');
 const jwtPassword = "secret";
 const bodyParser = require("body-parser");
 const { blogs, Blog } = require('./blog');
-=======
-const { auth, generateToken } = require('./middleware');
-const jwtPassword = "secret";
-const bodyParser = require("body-parser");
-const { blogs, Blog } = require('./blog');
-const session = require('express-session');
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-    },
-});
-
-const upload = multer({ storage: storage });
-
->>>>>>> Stashed changes
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(jsonParser);
 // app.use(verifyToken);
 app.use(express.json());
 app.use(cors());
-<<<<<<< Updated upstream
 
 app.post('/signup', async function(req, res) {
-=======
-app.use(session({ secret: 'your_session_secret', resave: false, saveUninitialized: true }));
-
-require('dotenv').config();
-
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-});
-
-
-app.post('/signup', async function (req, res) {
->>>>>>> Stashed changes
     const createPayload = req.body;
     const parsePayload = createUser.safeParse(createPayload);
     if (!parsePayload.success) {
@@ -92,12 +57,7 @@ app.post('/login', async function (req, res) {
 
 })
 
-<<<<<<< Updated upstream
 app.get('/profile', auth, async function (req, res){
-=======
-
-app.get('/userAuth', auth, async function (req, res) {
->>>>>>> Stashed changes
     const userId = req.userId;
     const user = await User.findOne({_id: userId});
     console.log(user);
@@ -132,43 +92,6 @@ app.post('/postBlog', auth, async function(req, res){
     })
 })
 
-<<<<<<< Updated upstream
-=======
-app.get('/profile', auth, async function (req, res) {
-    const userId = req.userId;
-    const user = await User.findOne({ _id: userId });
-    const imageLink = user.profileImage;
-    console.log(imageLink);
-    return res.status(200).send(imageLink);
-})
-
-app.post('/uploadUserImage', auth, upload.single('image'), async (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({ msg: 'No file uploaded' });
-        }
-
-        const result = await cloudinary.uploader.upload(req.file.path);
-        const user = await User.findById(req.userId);
-        if (!user) {
-            return res.status(404).json({ msg: 'User not found' });
-        }
-
-        // user.profileImage = result.secure_url;
-        await User.findByIdAndUpdate(
-            req.userId,
-            { $set: { profileImage: result.secure_url } },
-            { new: true }
-        )
-        res.json({ msg: 'Image uploaded', user });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
-
-
->>>>>>> Stashed changes
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
 });

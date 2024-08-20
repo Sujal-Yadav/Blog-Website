@@ -1,82 +1,10 @@
 import { useSearchParams } from "react-router-dom";
 import Navbar from "./Navbar";
-<<<<<<< Updated upstream
 import { useState } from "react";
-=======
-import { useEffect, useRef, useState } from "react";
->>>>>>> Stashed changes
 import { Link } from "react-router-dom";
 
 export default function Profile() {
     const [sidebar, setSidebar] = useState(false);
-<<<<<<< Updated upstream
-=======
-    const [profile, setProfile] = useState(false);
-    const [image, setImage] = useState(null);
-    const [uploading, setUploading] = useState(false);
-    const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-    const navigate = useNavigate();
-    const fileInputRef = useRef(null);
-
-    const handleImageChange = (e) => {
-        setImage(e.target.files[0]);
-    };
-
-    const handleButtonClick = () => {
-        if (!image) {
-            fileInputRef.current.click();
-        } else {
-            handleUpload();
-        }
-    };
-
-    const handleUpload = async () => {
-        const formData = new FormData();
-        formData.append('image', image);
-        // formData.append('userId', userId);
-        setUploading(true);
-
-        try {
-            const res = await axios.post('http://localhost:3000/uploadUserImage', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    "Authorization": localStorage.getItem('token'),
-                },
-            });
-            setUploadedImageUrl(res.data.user.profileImage);
-            console.log(res.data);
-            setUploading(false);
-        } catch (err) {
-            console.error(err);
-            setUploading(false);
-        }
-    };
-
-    useEffect(() => {
-        async function renderProfile() {
-            try {
-                const response = await axios.get('http://localhost:3000/profile', {
-                    headers: {
-                        'Authorization': localStorage.getItem('token')
-                    }
-                })
-                const name = response.data;
-                setUploadedImageUrl(name);
-                setProfile(true);
-
-            } catch (error) {
-                alert(error.response.data.msg);
-            }
-        }
-        renderProfile();
-    }, [uploadedImageUrl]);
-
-    function handleLogout() {
-        localStorage.removeItem('token');
-        setProfile(false);
-        navigate('/');
-    }
->>>>>>> Stashed changes
 
     return (
         <>
@@ -155,7 +83,6 @@ export default function Profile() {
 
                 <div class="p-4 sm:ml-64 pt-20 h-full">
                     <div class="p-4">
-<<<<<<< Updated upstream
                         <div className="text-black dark:text-white text-3xl py-5">User Setting</div>
                         <div class="grid grid-cols-6 gap-4">
                             <div class="flex col-span-2 row-span-2 rounded-lg bg-gray-200 h-fit p-8 dark:bg-gray-800">
@@ -164,46 +91,6 @@ export default function Profile() {
                                     <div className="text-black dark:text-white text-2xl font-semibold mx-4">Sujal Yadav</div>
                                     <div className="text-black dark:text-gray-400 mx-4">Software Developer</div>
                                     <button type="button" class="text-white inline-flex items-center mx-4 mt-7 hover:text-white border border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-400 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">
-=======
-                        <div className="text-black dark:text-white text-4xl py-5">User Setting</div>
-                        <div className="grid grid-cols-5 gap-4">
-                        <div className="flex col-span-2 row-span-1 rounded-lg bg-gray-100 p-8 dark:bg-gray-800">
-                                {uploadedImageUrl ? (
-                                    <img
-                                        src={uploadedImageUrl}
-                                        alt="Selected"
-                                        style={{ width: '150px', height: '150px', borderRadius: '10%' }}
-                                    />
-                                ) : (
-                                    <div
-                                        style={{
-                                            width: '150px',
-                                            height: '150px',
-                                            borderRadius: '10%',
-                                            backgroundColor: '#f0f0f0',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            marginBottom: '20px',
-                                        }}
-                                    >
-                                        <span>No Image</span>
-                                    </div>
-                                )}
-
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    style={{ display: 'none' }}
-                                    onChange={handleImageChange}
-                                    ref={fileInputRef}
-                                />
-
-                                <div className="flex flex-col">
-                                    <div className="text-black dark:text-white text-2xl font-semibold mx-4">Sujal Yadav</div>
-                                    <div className="text-black dark:text-gray-400 mx-4">Software Developer</div>
-                                    <button onClick={handleButtonClick} class="cursor-pointer text-gray-700 inline-flex items-center mx-2 mt-2 hover:text-white border border-gray-800 hover:bg-gray-800 focus:ring-2 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">
->>>>>>> Stashed changes
                                         <svg class="w-[20px] h-[20px] mr-1 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M12 3a1 1 0 0 1 .78.375l4 5a1 1 0 1 1-1.56 1.25L13 6.85V14a1 1 0 1 1-2 0V6.85L8.78 9.626a1 1 0 1 1-1.56-1.25l4-5A1 1 0 0 1 12 3ZM9 14v-1H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-4v1a3 3 0 1 1-6 0Zm8 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd" />
                                         </svg>
@@ -311,7 +198,6 @@ export default function Profile() {
                                     </button>
                                 </form>
                             </div>
-<<<<<<< Updated upstream
                             
                             <div class="p-8 col-span-4 row-span-3 items-center rounded-lg bg-gray-50 h-fit dark:bg-gray-800">
                                 <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">General Information</h2>
@@ -357,8 +243,6 @@ export default function Profile() {
                                     </div>
                                 </form>
                             </div>
-=======
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>

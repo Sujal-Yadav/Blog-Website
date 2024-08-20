@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
 const JWT_SECRET = "secret";
-=======
-require('dotenv').config()
->>>>>>> Stashed changes
 var jwt = require('jsonwebtoken');
 
 module.exports = {
@@ -13,7 +9,7 @@ module.exports = {
         if (!authHeader) {
             return res.status(403).json({msg: "Missing auth header"});
         }
-        const decoded = jwt.verify(authHeader, process.env.JWT_SECRET);
+        const decoded = jwt.verify(authHeader, JWT_SECRET);
         if (decoded && decoded.id) {
             req.userId = decoded.id;
             next()

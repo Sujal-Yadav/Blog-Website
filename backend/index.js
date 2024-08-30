@@ -15,7 +15,7 @@ var limiter = RateLimit({
 });
 app.use(limiter);
 var jsonParser = bodyParser.json();
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+// var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(jsonParser);
 // app.use(verifyToken);
 app.use(express.json());
@@ -63,19 +63,9 @@ app.post('/login', async function (req, res) {
 
 })
 
-app.get('/profile', auth, async function (req, res){
-    const userId = req.userId;
-    const user = await User.findOne({_id: userId});
-    console.log(user);
-    if(user == null){
-        return res.status(401).send({msg: "Try Login Again"})
-    }
-    return res.status(200).send(user.name);
-})
-
 app.get('/getBlog', auth, async function(req, res) {
     const blogs = await Blog.find({});
-    return res.status(200).send(blogs);
+    res.status(200).send(blogs);
 })
 
 app.post('/postBlog', auth, async function(req, res){
@@ -93,7 +83,7 @@ app.post('/postBlog', auth, async function(req, res){
         {new: true}
     )
 
-    return res.json({
+    res.json({
         msg: "Blog created Successfully."
     })
 })

@@ -8,6 +8,12 @@ const {auth} = require('./middleware');
 const jwtPassword = "secret";
 const bodyParser = require("body-parser");
 const { blogs, Blog } = require('./blog');
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+app.use(limiter);
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(jsonParser);

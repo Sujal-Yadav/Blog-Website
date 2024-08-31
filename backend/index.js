@@ -10,7 +10,6 @@ const dotenv = require('dotenv');
 const path = require('path');
 var jwt = require('jsonwebtoken');
 const { auth, generateToken } = require('./middleware');
-const jwtPassword = "secret";
 const bodyParser = require("body-parser");
 const { blogs, Blog } = require('./blog');
 
@@ -77,7 +76,7 @@ app.post('/login', async function (req, res) {
         return res.status(401).send({ msg: "You entered wrong password" });
     }
 
-    const token = jwt.sign({ id: user.id }, jwtPassword);
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
     return res.json({ token });
 
 })

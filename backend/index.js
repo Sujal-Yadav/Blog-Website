@@ -27,7 +27,7 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var RateLimit = require('express-rate-limit');
 var limiter = RateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 60 * 60 * 1000, // 60 minutes
   max: 100, // max 100 requests per windowMs
 });
 
@@ -91,6 +91,7 @@ app.post('/login', async function (req, res) {
 
 app.get('/userAuth', auth, async function (req, res) {
     const userId = req.userId;
+    console.log(userId);
     const user = await User.findOne({ _id: userId });
     console.log(user);
     if (user == null) {
@@ -127,9 +128,9 @@ app.post('/postBlog', auth, async function (req, res) {
 app.get('/profile', auth, async function (req, res) {
     const userId = req.userId;
     const user = await User.findOne({ _id: userId });
-    const imageLink = user.profileImage;
-    console.log(imageLink);
-    return res.status(200).send(imageLink);
+    
+    console.log(user);
+    return res.status(200).send(user);
 })
 
 app.post('/uploadUserImage', auth, upload.single('image'), async (req, res) => {

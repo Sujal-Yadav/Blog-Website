@@ -49,7 +49,7 @@ export default function Navbar(props) {
                 <li className='p-4'>Resources</li>
                 <li className='p-4'>Contacts</li>
                 <li className='p-4'>About</li>
-                
+
             </ul>}
             <DarkModeToggle />
             <div className={!navbar ? 'fixed left-0 w-full text-lg backdrop-blur-md  h-auto text-center mt-20 top-0 ease-in-out duration-500' : 'fixed top-[-100%]'}>
@@ -67,12 +67,10 @@ export default function Navbar(props) {
                     {/* <div>
                         <button className="bg-slate-100 p-2 rounded-md dark:bg-slate-800" onClick={handleLogout}>Logout</button>
                     </div> */}
-                    <div className="p-3 bg-slate-200 dark:bg-slate-800 rounded-md m-2">
+                    <div className="p-1.5 bg-slate-200 dark:bg-slate-800 rounded-md m-2">
                         <Link to='/profile'>
                             <div className="flex justify-center items-center">
-                                <div className=" ml-2 rounded-full">
-                                    <img className="object-fill max-w-9" src="src\assets\male_icon.png" alt="" />
-                                </div>
+                                <img className="object-fill max-w-9 rounded-full mx-2" src="src\assets\male_icon.jpg" alt="" />
                                 <div className="mx-2 text-nowrap">{profile}</div>
                             </div>
                         </Link>

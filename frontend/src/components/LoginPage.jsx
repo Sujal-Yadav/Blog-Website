@@ -42,7 +42,6 @@ export default function LoginPage() {
         }
     };
 
-<<<<<<< HEAD
     const handleGoogleResponse = async (authResult) => {
         try{
             if(authResult['code']){
@@ -59,8 +58,6 @@ export default function LoginPage() {
     //     flow: 'auth-code'
     // })
 
-=======
->>>>>>> parent of 34cf63d (Reverting the previous changes)
     return (
         <div className="h-screen sm:h-dvh mt-10">
             <div className="lg:grid lg:grid-cols-2 md:grid md:grid-cols-1 justify-center items-center ml-4">

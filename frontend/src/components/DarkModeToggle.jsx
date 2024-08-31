@@ -11,7 +11,7 @@ const DarkModeToggle = () => {
     return (
         <button
             onClick={toggleDarkMode}
-            className="p-3 bg-gray-200 dark:bg-slate-800 text-white rounded-md"
+            className="px-4 py-2 bg-gray-200 dark:bg-slate-800 text-white rounded-md"
         >
             {darkMode ?
                 <svg class="w-6 h-6  text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

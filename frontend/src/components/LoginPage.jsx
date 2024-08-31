@@ -5,7 +5,6 @@ import Lottie from 'react-lottie';
 import Login from '../../public/Login.json'
 
 export default function LoginPage() {
-
     const navigate = useNavigate();
     const [wrongPass, setWrongPass] = useState("");
 

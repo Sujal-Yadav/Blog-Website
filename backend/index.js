@@ -23,9 +23,16 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
+// apply rate limiter to all requests
+app.use(limiter);
 app.use(jsonParser);
 app.use(express.json());
 app.use(cors());

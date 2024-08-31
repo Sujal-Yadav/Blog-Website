@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-mongoose.connect("mongodb+srv://sujjalyadav:o6MHRQM9UNlYbUMe@cluster0.mgthhai.mongodb.net/?retryWrites=true&w=majority")
+mongoose.createConnection(process.env.MONGO_URI)
 
 const userData = mongoose.Schema({
+    profileImage: String,
     name: String,
     phone: Number,
     email: String,

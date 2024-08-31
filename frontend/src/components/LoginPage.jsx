@@ -3,10 +3,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import Lottie from 'react-lottie';
 import Login from '../../public/Login.json'
+import Navbar from "./Navbar";
 
 export default function LoginPage() {
     const navigate = useNavigate();
     const [wrongPass, setWrongPass] = useState("");
+    const [isVisible, setIsVisible] = useState(true);
+
+    function handleVisible() {
+        setIsVisible(!isVisible);
+    }
 
     const defaultOptions = {
         loop: true,
@@ -58,6 +64,8 @@ export default function LoginPage() {
     // })
 
     return (
+        <>
+        <Navbar />
         <div className="h-screen sm:h-dvh mt-10">
             <div className="lg:grid lg:grid-cols-2 md:grid md:grid-cols-1 justify-center items-center ml-4">
                 <div className="col-span-1 md:flex hidden"><Lottie
@@ -81,10 +89,10 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    <div className="md:grid md:grid-cols-4 gap-4 grid grid-cols-4">
-                        <div className="md:mt-2 mt-2 md:col-span-2 col-span-2">
-                            <button type="submit" className="text-white dark:text-slate-950 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
-                        </div>
+                        <div className="md:grid md:grid-cols-4 gap-4 grid grid-cols-4">
+                            <div className="md:mt-2 mt-2 md:col-span-2 col-span-2">
+                                <button type="submit" className="text-white dark:text-slate-950 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+                            </div>
 
                         <div className="md:mt-2 mt-2 md:col-span-2 col-span-2">
                             <Link to='/signup'><button type="button" className="text-white bg-blue-700 dark:text-slate-950 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign Up</button></Link>
@@ -104,5 +112,7 @@ export default function LoginPage() {
             </div>
 
         </div>
+        </>
+        
     );
 }

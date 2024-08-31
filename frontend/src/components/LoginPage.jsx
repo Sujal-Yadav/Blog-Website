@@ -85,58 +85,11 @@ export default function LoginPage() {
                             {wrongPass}
                         </div>
                     </div>
-        <>
-            <Navbar user={false} />
-            <div className="h-screen sm:h-dvh mt-10">
-                <div className="flex flex-row justify-center items-center ml-4">
-                    <div className="w-full md:flex hidden"><Lottie
-                        options={defaultOptions}
-                        height={600}
-                        width={600}
-                    /></div>
-                    <form onSubmit={handleSubmit} className="w-5/6 h-fit mx-8 dark:bg-slate-950 p-6 border dark:border-slate-800 rounded-md">
-                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white pb-2 mx-6">
-                            Sign in to Blogsite
-                        </h2>
-                        <div className="mb-5 mx-6">
-                            <label htmlFor="email" className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Email</label>
-                            <input type="email" name="email" value={formData.email} onChange={handleChange} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-950 dark:border-slate-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" autoComplete="email" required />
-                        </div>
-                        {/* <div className="mb-5">
-                            <label htmlFor="password" className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" id="password" name="password" value={formData.password} autoComplete="password" onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-950 dark:border-slate-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                            <div className=" mb-4 text-lg text-red-800 dark:text-red-500" role="alert">
-                                {wrongPass}
-                            </div>
-                        </div> */}
-                        <div className="mb-5 mx-6">
-                            <label htmlFor="password" className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Password</label>
-                            <div className="flex">
-                                <input type={!isVisible ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-950 dark:border-slate-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" autoComplete="password" required />
-                                {!isVisible ?
-                                    <button type="button" onClick={handleVisible} className="border-y border-r rounded-r-lg dark:bg-slate-950 dark:border-slate-800 p-2">
-                                        <svg className="w-6 h-6 text-slate-700 dark:text-slate-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
-                                            <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                        </svg>
-                                    </button> :
-                                    <button type="button" onClick={handleVisible} className="border-y border-r rounded-r-lg dark:bg-slate-950 dark:border-slate-800 p-2">
-                                        <svg className="w-6 h-6 text-slate-700 dark:text-slate-700 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                        </svg>
 
-                                    </button>
-                                }
+                        <div className="md:grid md:grid-cols-4 gap-4 grid grid-cols-4">
+                            <div className="md:mt-2 mt-2 md:col-span-2 col-span-2">
+                                <button type="submit" className="text-white dark:text-slate-950 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
                             </div>
-                            <div className=" mb-4 text-lg text-red-800 dark:text-red-500" role="alert">
-                                {wrongPass}
-                            </div>
-                        </div>
-
-                    <div className="md:grid md:grid-cols-4 gap-4 grid grid-cols-4 mx-6">
-                        <div className="md:mt-2 mt-2 md:col-span-2 col-span-2">
-                            <button type="submit" className="text-white dark:text-slate-950 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
-                        </div>
 
                         <div className="md:mt-2 mt-2 md:col-span-2 col-span-2">
                             <Link to='/signup'><button type="button" className="text-white bg-blue-700 dark:text-slate-950 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign Up</button></Link>

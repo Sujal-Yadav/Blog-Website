@@ -10,15 +10,17 @@ const HomePage = () => {
     }]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/getBlog', {
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        }).then(function (res) {
-            const data = res.data;
-            setBlogs(data);
-        });
-    }, [blogs]);
+        async function handleBlog() {
+            const response = await axios.get('http://localhost:3000/getBlog', {
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            })
+            console.log(response.data);
+            setBlogs(response.data);
+        }
+        handleBlog();
+    }, []);
 
     return (
         <>

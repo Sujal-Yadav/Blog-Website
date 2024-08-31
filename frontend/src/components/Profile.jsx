@@ -8,6 +8,7 @@ export default function Profile() {
     const [sidebar, setSidebar] = useState(false);
     const [profile, setProfile] = useState(false);
     const [image, setImage] = useState(null);
+    const [name, setName] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
     const navigate = useNavigate();
@@ -54,15 +55,16 @@ export default function Profile() {
                         'Authorization': localStorage.getItem('token')
                     }
                 })
-                const name = response.data;
-                setUploadedImageUrl(name);
+                const name = response.data.name;
+                setName(name);
+                setUploadedImageUrl(response.data.profileImage)
                 setProfile(true);
             } catch (error) {
                 alert(error.response.data.msg);
             }
         }
         renderProfile();
-    }, [uploadedImageUrl]);
+    }, []);
 
     function handleLogout() {
         localStorage.removeItem('token');
@@ -182,7 +184,7 @@ export default function Profile() {
                                 />
 
                                 <div className="flex flex-col">
-                                    <div className="text-black dark:text-white text-2xl font-semibold mx-4">Sujal Yadav</div>
+                                    <div className="text-black dark:text-white text-2xl font-semibold mx-4">{name}</div>
                                     <div className="text-black dark:text-gray-400 mx-4">Software Developer</div>
                                     <button onClick={handleButtonClick} class="cursor-pointer text-gray-700 inline-flex items-center mx-2 mt-2 hover:text-white border border-gray-800 hover:bg-gray-800 focus:ring-2 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">
                                         <svg class="w-[20px] h-[20px] mr-1 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">

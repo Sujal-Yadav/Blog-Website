@@ -9,17 +9,11 @@ const cloudinary = require('cloudinary').v2;
 const dotenv = require('dotenv');
 const path = require('path');
 var jwt = require('jsonwebtoken');
-const { auth } = require('./middleware');
+const { auth, generateToken } = require('./middleware');
 const jwtPassword = "secret";
 const bodyParser = require("body-parser");
 const { blogs, Blog } = require('./blog');
-var RateLimit = require('express-rate-limit');
-var limiter = RateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // max 100 requests per windowMs
-});
-app.use(limiter);
-// Ensure this directory exists
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');
@@ -31,12 +25,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
 var jsonParser = bodyParser.json();
-// var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(jsonParser);
 app.use(express.json());
 app.use(cors());
+
 require('dotenv').config();
 
 cloudinary.config({
@@ -44,6 +38,7 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
+
 
 app.post('/signup', async function (req, res) {
     const createPayload = req.body;
@@ -87,9 +82,20 @@ app.post('/login', async function (req, res) {
 
 })
 
+
+app.get('/userAuth', auth, async function (req, res) {
+    const userId = req.userId;
+    const user = await User.findOne({ _id: userId });
+    console.log(user);
+    if (user == null) {
+        return res.status(401).send({ msg: "Try Login Again" })
+    }
+    return res.status(200).send(user.name);
+})
+
 app.get('/getBlog', auth, async function (req, res) {
     const blogs = await Blog.find({});
-    res.status(200).send(blogs);
+    return res.status(200).send(blogs);
 })
 
 app.post('/postBlog', auth, async function (req, res) {
@@ -107,37 +113,42 @@ app.post('/postBlog', auth, async function (req, res) {
         { new: true }
     )
 
-    res.json({
+    return res.json({
         msg: "Blog created Successfully."
     })
 })
 
 app.get('/profile', auth, async function (req, res) {
-    return res.json({
-        msg: "Profile Accessed Successfully."
-    })
+    const userId = req.userId;
+    const user = await User.findOne({ _id: userId });
+    const imageLink = user.profileImage;
+    console.log(imageLink);
+    return res.status(200).send(imageLink);
 })
 
 app.post('/uploadUserImage', auth, upload.single('image'), async (req, res) => {
     try {
         if (!req.file) {
-          return res.status(400).json({ msg: 'No file uploaded' });
+            return res.status(400).json({ msg: 'No file uploaded' });
         }
-    
+
         const result = await cloudinary.uploader.upload(req.file.path);
         const user = await User.findById(req.userId);
         if (!user) {
-          return res.status(404).json({ msg: 'User not found' });
+            return res.status(404).json({ msg: 'User not found' });
         }
-    
-        user.profileImage = result.secure_url;
-        await user.save();
-    
+
+        // user.profileImage = result.secure_url;
+        await User.findByIdAndUpdate(
+            req.userId,
+            { $set: { profileImage: result.secure_url } },
+            { new: true }
+        )
         res.json({ msg: 'Image uploaded', user });
-      } catch (err) {
+    } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
-      }
+    }
 });
 
 

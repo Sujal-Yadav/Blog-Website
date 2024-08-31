@@ -1,7 +1,7 @@
 const Blog = ({ title, description }) => {
     return (
         <a href="#">
-            {/* <div className="md:col-span-1 col-span-2 p-2 hover:scale-110 duration-300 cursor-pointer">
+            <div className="md:col-span-1 col-span-2 p-2 hover:scale-110 duration-300 cursor-pointer">
                 <div className="flex justify-start bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 hover:bg-gray-600 outline-2 hover:outline-slate-400 dark:border-gray-700 text-wrap overflow-hidden">
                     <div className="p-5 text-wrap w-screen ">
 
@@ -25,10 +25,10 @@ const Blog = ({ title, description }) => {
 
                     </div>
                 </div>
-            </div> */}
+            </div>
 
 
-            <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            {/* <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">
                     <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
                 </a>
@@ -44,7 +44,7 @@ const Blog = ({ title, description }) => {
                         </svg>
                     </a>
                 </div>
-            </div>
+            </div> */}
 
         </a>
     );

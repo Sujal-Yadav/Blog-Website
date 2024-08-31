@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Lottie from 'react-lottie';
 import Login from '../../public/Login.json'
+import Navbar from "./Navbar";
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -63,6 +64,8 @@ export default function LoginPage() {
     // })
 
     return (
+        <>
+        <Navbar />
         <div className="h-screen sm:h-dvh mt-10">
             <div className="lg:grid lg:grid-cols-2 md:grid md:grid-cols-1 justify-center items-center ml-4">
                 <div className="col-span-1 md:flex hidden"><Lottie
@@ -109,5 +112,7 @@ export default function LoginPage() {
             </div>
 
         </div>
+        </>
+        
     );
 }

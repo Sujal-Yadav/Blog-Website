@@ -13,6 +13,26 @@ const { auth, generateToken } = require('./middleware');
 const bodyParser = require("body-parser");
 const { blogs, Blog } = require('./blog');
 
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+    windowMs: 60 * 60 * 1000, // 60 minutes
+    max: 10000, // max 100 requests per windowMs
+});
+
+app.use(limiter);
+app.use(jsonParser);
+app.use(express.json());
+app.use(cors());
+require('dotenv').config();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');
@@ -23,28 +43,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-var jsonParser = bodyParser.json();
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var RateLimit = require('express-rate-limit');
-var limiter = RateLimit({
-  windowMs: 60 * 60 * 1000, // 60 minutes
-  max: 100, // max 100 requests per windowMs
-});
-
-// apply rate limiter to all requests
-app.use(limiter);
-app.use(jsonParser);
-app.use(express.json());
-app.use(cors());
-
-require('dotenv').config();
-
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-});
-
 
 app.post('/signup', async function (req, res) {
     const createPayload = req.body;
@@ -61,7 +59,6 @@ app.post('/signup', async function (req, res) {
         phone: createPayload.phone,
         email: createPayload.email,
         password: createPayload.password,
-        blogIds: createPayload.blogIds
     });
 
     res.json({
@@ -128,7 +125,7 @@ app.post('/postBlog', auth, async function (req, res) {
 app.get('/profile', auth, async function (req, res) {
     const userId = req.userId;
     const user = await User.findOne({ _id: userId });
-    
+
     console.log(user);
     return res.status(200).send(user);
 })
@@ -158,7 +155,25 @@ app.post('/uploadUserImage', auth, upload.single('image'), async (req, res) => {
     }
 });
 
+app.post('/updateUserDetails', auth, async (req, res) => {
+    const details = req.body;
+    const user = await User.findByIdAndUpdate(
+        req.userId,
+        {
+            $set:
+            {
+                city: details.city,
+                country: details.country,
+                zipCode: details.zipCode,
+                address: details.address
+            }
+        },
+        { new: true }
+    )
 
+    res.json({msg: "User Details Updated Successfully !!", user})
+
+})
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
 });

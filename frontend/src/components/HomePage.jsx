@@ -24,9 +24,9 @@ const HomePage = () => {
 
     return (
         <>
-            <Navbar user={true} position={true} />
+            <Navbar user={true} position={false} />
             <div className="pb-2">
-                <div className="grid grid-cols-2 h-screen dark:text-white pt-28">
+                <div className="grid grid-cols-2 h-screen dark:text-white">
                     <div className="col-span-1 pt-20">
                         <div className="mt-20 text-5xl p-8 font-bold">
                             Create a blog

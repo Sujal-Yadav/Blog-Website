@@ -14,8 +14,6 @@ function App() {
         {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signup" element={<SignUpPage />} />\
           
           <Route element={<PrivateRoute />}>

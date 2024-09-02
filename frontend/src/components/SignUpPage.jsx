@@ -53,9 +53,9 @@ export default function SignUpPage() {
 
     return (
         <>
-            <Navbar user={false} />
-            <div className="h-screen sm:h-dvh">
-                <div className="flex grid-cols-2 justify-around items-center ml-4">
+            <Navbar position={true} />
+            <>
+                <div className="flex grid-cols-2 justify-center h-screen items-center pt-16">
                     <div className="md:flex hidden col-span-1"><Lottie
                         options={defaultOptions}
                         height={600}
@@ -122,7 +122,7 @@ export default function SignUpPage() {
                         </div>
                     </form>
                 </div>
-            </div>
+            </>
         </>
     );
 }

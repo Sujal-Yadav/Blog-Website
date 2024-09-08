@@ -3,8 +3,10 @@ import Navbar from "./Navbar";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function Profile() {
+export default function Profile(props) {
     const [sidebar, setSidebar] = useState(false);
     const [profile, setProfile] = useState({});
     const [image, setImage] = useState(null);
@@ -21,6 +23,7 @@ export default function Profile() {
     };
 
     const closeModal = () => {
+        resetForm()
         setIsModalOpen(false);
     };
 
@@ -39,11 +42,11 @@ export default function Profile() {
     useEffect(() => {
         async function handleUpload() {
             if (!image) return;  // Prevent upload if no image is selected
-    
+
             const htmlFormData = new FormData();
             htmlFormData.append('image', image);
             setUploading(true);
-    
+
             try {
                 const res = await axios.post('http://localhost:3000/uploadUserImage', htmlFormData, {
                     headers: {
@@ -51,21 +54,21 @@ export default function Profile() {
                         "Authorization": localStorage.getItem('token'),
                     },
                 });
-    
+
                 const uploadedUrl = res.data.user.profileImage;
                 setUploadedImageUrl(uploadedUrl);  // Update the profile image URL immediately
                 setProfile((prevProfile) => ({
                     ...prevProfile,
                     profileImage: uploadedUrl  // Update the profile state to trigger UI update
                 }));
-                console.log(uploadedUrl);
+                // console.log(uploadedUrl);
             } catch (err) {
                 console.error(err);
             } finally {
                 setUploading(false);
             }
         }
-    
+
         if (image) {
             handleUpload();  // Trigger upload only when image is selected
         }
@@ -79,9 +82,9 @@ export default function Profile() {
                         'Authorization': localStorage.getItem('token')
                     }
                 })
-                const name = response.data.name;
-                setUserDetails(response.data);
-                setUploadedImageUrl(response.data.profileImage)
+                // const name = response.data.name;
+                setUserDetails(response.data.user);
+                setUploadedImageUrl(response.data.user.profileImage)
                 setProfile(true);
             } catch (error) {
                 alert(error.response.data.msg);
@@ -101,6 +104,13 @@ export default function Profile() {
         description: ''
     })
 
+    const resetForm = () => {
+        setBlog({
+            title: '',
+            description: ''
+        });
+    };
+
     const handleBlogChange = (e) => {
         setBlog({ ...blog, [e.target.name]: e.target.value });
     };
@@ -118,9 +128,16 @@ export default function Profile() {
                 });
                 setSaveBlog(false);
                 closeModal();
+                toast.success('Blog saved successfully!', {
+                    autoClose: 5000, // Toast will disappear after 5 seconds
+                });
             }, 3000);
+
         } catch (err) {
             console.error(err);
+            toast.error('Failed to save the blog.', {
+                autoClose: 5000,
+            });
             setSaveBlog(false);
         }
     };
@@ -132,32 +149,27 @@ export default function Profile() {
         country: '',
         zipCode: '',
         address: '',
-        email: ''
+        email: '',
+        profileImage: ''
     });
 
     const handleChange = (e) => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setSaving(true);
+        
         try {
-            const res = await axios.post('http://localhost:3000/updateUserDetails', userDetails, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": localStorage.getItem('token'),
-                },
-            });
-
             setTimeout(async () => {
-                const updatedRes = await axios.get('http://localhost:3000/profile', {
+                const res = await axios.post('http://localhost:3000/updateUserDetails', userDetails, {
                     headers: {
+                        'Content-Type': 'application/json',
                         "Authorization": localStorage.getItem('token'),
                     },
-                });
-                setUserDetails(updatedRes.data); // Reflect updated details
-                setSaving(false); // Stop saving/loading indicator
+                });        
+                setSaving(false);
             }, 3000);
         } catch (err) {
             console.error(err);
@@ -165,9 +177,27 @@ export default function Profile() {
         }
     };
 
+    // useEffect(() => {
+    //     async function getUserProfile(){
+    //         try {
+    //             const updatedRes = await axios.get('http://localhost:3000/profile', {
+    //                 headers: {
+    //                     "Authorization": localStorage.getItem('token'),
+    //                 },
+    //             });
+    //             setUserDetails(updatedRes.data.user)
+    //             // console.log(updatedRes.data.user)
+    //         } catch (err) {
+    //             console.error(err);
+    //             setSaving(false);
+    //         }
+    //     }
+    //     getUserProfile()
+    // }, []);
+
     return (
         <>
-            <Navbar user={false} position={!sidebar} />
+            {/* <Navbar profile={true} /> */}
             <div>
                 <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                     <span className="sr-only">Open sidebar</span>
@@ -177,13 +207,13 @@ export default function Profile() {
                 </button>
 
                 {!sidebar &&
-                    <div className="fixed top-20 left-0 w-64 transition-transhtmlForm -translate-x-full md:translate-x-0">
+                    <div className="fixed top-20 left-0 w-64 h-0 transition-transhtmlForm -translate-x-full md:translate-x-0">
                         {isModalOpen && <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>}
                         <div className="grid grid-rows-[1fr,auto] bg-white dark:bg-gray-950 rounded-lg ml-4 mt-4">
                             <div className="px-3 py-4">
                                 <ul className="space-y-2 font-medium">
                                     <li>
-                                        <Link to='/home' className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                        <Link to={`/home/${userDetails._id}`} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                             <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                                                 <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                                                 <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
@@ -192,7 +222,7 @@ export default function Profile() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to='/userBlogs' className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                        <Link to={`/userBlogs/${userDetails._id}`} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                             <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                                                 <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                                             </svg>
@@ -244,6 +274,7 @@ export default function Profile() {
 
                 <div className="p-4 md:ml-64 pt-20 h-full ">
                     <div className="py-4">
+                        <ToastContainer />
                         <div className="flex justify-between">
                             <div className="text-black dark:text-white text-4xl py-5">User Setting</div>
                             <button onClick={openModal} className="flex justify-items-end items-center">
@@ -312,7 +343,7 @@ export default function Profile() {
                     <div className="grid grid-cols-1 gap-4 md:grid md:grid-cols-5">
                         <div className="col-span-2 grid grid-cols-3 rounded-lg bg-gray-100 p-6 dark:bg-gray-800">
                             {uploadedImageUrl ? (
-                                <img className="col-span-1 flex justify-center items-center rounded-lg h-40 w-36" src={uploadedImageUrl} alt="Selected" />
+                                <img className="col-span-1 flex justify-center items-center rounded-lg h-40 w-36" src={userDetails.profileImage} alt="Selected" />
                             ) : (
                                 <div className="col-span-1 flex justify-center items-center rounded-lg h-40 w-36">
                                     <span>No Image</span>

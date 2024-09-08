@@ -2,14 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import Lottie from 'react-lottie';
-import Login from '../../public/Login.json'
+import Login from '../assets/Login.json'
 import Navbar from "./Navbar";
 
 export default function LoginPage() {
     const navigate = useNavigate();
     const [wrongPass, setWrongPass] = useState("");
     const [isVisible, setIsVisible] = useState(true);
-
     function handleVisible() {
         setIsVisible(!isVisible);
     }
@@ -40,27 +39,27 @@ export default function LoginPage() {
             const token = response.data.token;
             // alert("Login Successfull")
             localStorage.setItem('token', token);
-            navigate('/home');
+            navigate(`/home/${response.data.userId}`);
         } catch (error) {
-            console.log(error.response.data.msg)
+            // console.log(error.response.data.msg)
             return setWrongPass(error.response.data.msg);
         }
     };
 
     return (
         <>
-            <Navbar position={true} />
+            {/* <Navbar home={false} position={false} /> */}
             <>
-                <div className="lg:grid lg:grid-cols-3 md:grid md:grid-cols-1 h-screen justify-center items-center ml-4">
+                <div className="md:grid md:grid-cols-3 h-screen justify-center items-center m-4 pt-32 md:pt-2">
                     <div className="col-span-1 md:flex hidden"><Lottie
                         options={defaultOptions}
                         height={600}
                         width={600}
                     /></div>
-                    <form onSubmit={handleSubmit} className="col-span-2 mx-20 dark:bg-slate-950 p-16 border dark:border-slate-800 rounded-md">
-                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white pb-2">
+                    <form onSubmit={handleSubmit} className="md:col-span-2 md:mx-20 dark:bg-slate-950 md:p-16 p-4 border dark:border-slate-800 rounded-md ">
+                        <div className="md:text-3xl text-xl font-bold text-gray-900 dark:text-white pb-2">
                             Sign in to Blogsite
-                        </h2>
+                        </div>
                         <div className="mb-5">
                             <label htmlFor="email" className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Email</label>
                             <input type="email" name="email" value={formData.email} onChange={handleChange} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-950 dark:border-slate-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" autoComplete="email" required />

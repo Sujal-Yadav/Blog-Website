@@ -5,23 +5,33 @@ import SignUpPage from './components/SignUpPage';
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/Profile";
+import UserBlogs from "./components/UserBlogs";
+import BlogPage from "./components/BlogPage";
 
 function App() {
 
   return (
     <div className="dark:bg-slate-950 bg-white">
       <BrowserRouter>
-        {/* <Navbar /> */}
+        <Navbar />
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />\
           
           <Route element={<PrivateRoute />}>
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/home/:userId" element={<HomePage />} />
           </Route>
           
           <Route element={<PrivateRoute />}>
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:userId" element={<Profile />} />
+          </Route>
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/userBlogs/:userId" element={<UserBlogs />} />
+          </Route>
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/userBlogs/:userId/blogPage/:blogId" element={<BlogPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

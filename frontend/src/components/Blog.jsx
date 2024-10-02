@@ -1,10 +1,10 @@
 import { format } from 'date-fns';
 
 const Blog = ({ title, description, createdAt }) => {
-    const formattedDate = format(new Date(createdAt), 'PPpp');
+    const formattedDate = format(new Date(createdAt), 'PPp');
     return (
         <>
-            <div className="md:col-span-1 col-span-2 p-2 hover:scale-110 duration-300 cursor-pointer">
+            <div className="md:col-span-1 col-span-2 p-2  cursor-pointer">
                 <div className="flex flex-col justify-between bg-gray-100 border border-gray-200 rounded-md shadow dark:bg-gray-800 hover:bg-gray-200 outline-2 hover:outline-slate-400 dark:border-gray-700 h-60">
                     <div className='p-5 flex-grow overflow-hidden'>
                         <div className='flex justify-between items-center'>

@@ -41,7 +41,7 @@ function UserBlogs() {
                         },
                     })
                     setBlogs(userInfo.data.userBlogs);
-                    setPulse(false)
+                    // setPulse(false)
                 }
                 catch (err) {
                     console.log(err)
@@ -57,10 +57,10 @@ function UserBlogs() {
     return (
         <div>
             {/* <Navbar position={false} /> */}
-            <div className="text-7xl flex justify-center dark:text-white font-bold pt-32">Blogs to read</div>
+            <div className="md:ml-64 pl-6 text-5xl flex dark:text-white font-bold pt-28">Blogs to read</div>
             {loading ? (
-                <div className='md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid shadow lg:grid-cols-2 gap-6 m-20 h-screen'>
-                    <div className="md:col-span-1 col-span-2 p-2 hover:scale-110 duration-300 animate-pulse cursor-not-allowed">
+                <div className='md:ml-64 lg:ml-60 mx-auto md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid shadow lg:grid-cols-2 gap-6 m-10 h-screen'>
+                    <div className="md:col-span-1 col-span-2 p-2  animate-pulse cursor-not-allowed">
                         <div className="flex flex-col justify-between bg-gray-100 border border-gray-200 rounded-md shadow dark:bg-gray-800 hover:bg-gray-200 outline-2 hover:outline-slate-400 dark:border-gray-700 h-60">
                             <div className='p-5 flex-grow overflow-hidden'>
                                 <div class="rounded-full bg-slate-700 h-10 w-10"></div>
@@ -98,7 +98,7 @@ function UserBlogs() {
                     </div>
                 </div>
             ) : (
-                <div className='md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid shadow lg:grid-cols-2 gap-6 m-20'>
+                <div className='md:ml-64 mx-auto md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid shadow lg:grid-cols-2 gap-6 m-6'>
                     {blogs.map((blog, index) =>
                         <Link key={index} to={`/userBlogs/${userId}/blogPage/${blog._id}`}>
                             <Blog title={blog.title} description={blog.description} createdAt={blog.createdAt} />

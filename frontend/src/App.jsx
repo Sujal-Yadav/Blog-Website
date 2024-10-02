@@ -7,6 +7,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/Profile";
 import UserBlogs from "./components/UserBlogs";
 import BlogPage from "./components/BlogPage";
+import Setting from "./components/Setting";
 
 function App() {
 
@@ -17,17 +18,23 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />\
-          
+
           <Route element={<PrivateRoute />}>
             <Route path="/home/:userId" element={<HomePage />} />
           </Route>
-          
-          <Route element={<PrivateRoute />}>
-            <Route path="/profile/:userId" element={<Profile />} />
+
+          {/* <Route element={<PrivateRoute />}>
+            <Route path="/setting/:userId" element={<Setting />} />
           </Route>
 
           <Route element={<PrivateRoute />}>
-            <Route path="/userBlogs/:userId" element={<UserBlogs />} />
+            <Route path="/blogs/:userId" element={<UserBlogs />} />
+          </Route> */}
+          <Route path="/setting/:userId" element={<Setting />}>
+            <Route path="blogs" element={<UserBlogs />} />
+            <Route path="resources" element={<div>Resources Page</div>} />
+            <Route path="contacts" element={<div>Resources Page</div>} />
+            <Route path="about" element={<div>About Page</div>} />
           </Route>
 
           <Route element={<PrivateRoute />}>

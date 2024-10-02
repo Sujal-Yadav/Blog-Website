@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Lottie from 'react-lottie';
-import SignUp from '../../public/SignUp.json';
+import SignUp from '../assets/SignUp.json'
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Navbar from "./Navbar";
@@ -53,15 +53,15 @@ export default function SignUpPage() {
 
     return (
         <>
-            <Navbar position={true} />
+            {/* <Navbar position={true} /> */}
             <>
-                <div className="flex grid-cols-2 justify-center h-screen items-center pt-16">
+                <div className="md:grid md:grid-cols-3 md:h-full h-screen justify-center items-center m-4 pt-20 md:pt-28 md:pb-16">
                     <div className="md:flex hidden col-span-1"><Lottie
                         options={defaultOptions}
                         height={600}
                         width={600}
                     /></div>
-                    <form onSubmit={handleSubmit} className="mt-10 col-span-1 w-3/6 mr-10 dark:bg-slate-950 border dark:border-slate-800 p-6 rounded-md">
+                    <form onSubmit={handleSubmit} className="md:col-span-2 md:mx-20 dark:bg-slate-950 md:p-16 p-4 border dark:border-slate-800 rounded-md">
                         <h2 className="text-3xl font-bold text-gray-900 dark:text-white pb-2">
                             Sign up to Blogsite
                         </h2>

@@ -8,16 +8,16 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const dotenv = require('dotenv');
 const path = require('path');
-var jwt = require('jsonwebtoken');
+let jwt = require('jsonwebtoken');
 const { auth, generateToken } = require('./middleware');
 const bodyParser = require("body-parser");
 const { blogs, Blog } = require('./blog');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
-var jsonParser = bodyParser.json();
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var RateLimit = require('express-rate-limit');
-var limiter = RateLimit({
+let jsonParser = bodyParser.json();
+let urlencodedParser = bodyParser.urlencoded({ extended: false });
+let RateLimit = require('express-rate-limit');
+let limiter = RateLimit({
     windowMs: 60 * 60 * 1000, // 60 minutes
     max: 10000, // max 100 requests per windowMs
 });
@@ -87,6 +87,8 @@ app.post('/signup', async function (req, res) {
         email: createPayload.email,
         password: createPayload.password,
     });
+
+    await User.save(userDetails);
 
     const welcomeEmail = `
             <h1>Welcome to BlogSite, ${createPayload.name}}!</h1>

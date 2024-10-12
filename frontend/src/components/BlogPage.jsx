@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function BlogPage() {
-  const { userId, blogId } = useParams();
+  const { blogId } = useParams();
   const [blog, setBlog] = useState(null);
   const [error, setError] = useState(null);
 

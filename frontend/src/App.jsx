@@ -1,10 +1,9 @@
-import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from './components/LoginPage';
 import HomePage from './components/HomePage';
 import SignUpPage from './components/SignUpPage';
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
-import Profile from "./components/Profile";
 import UserBlogs from "./components/UserBlogs";
 import BlogPage from "./components/BlogPage";
 import Setting from "./components/Setting";

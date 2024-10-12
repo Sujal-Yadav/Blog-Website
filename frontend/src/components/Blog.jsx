@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Blog = ({ title, description, createdAt }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,7 +76,7 @@ const Blog = ({ title, description, createdAt }) => {
                 </div>
             </div>
             {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={(e) => e.stopPropagation()}>
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl">
                         <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">Edit Blog</h2>
 
@@ -87,7 +87,7 @@ const Blog = ({ title, description, createdAt }) => {
                             onChange={(e) => setEditedTitle(e.target.value)}
                             className="w-full p-2 mb-4 border rounded dark:bg-gray-700 dark:text-white"
                             placeholder="Title"
-                            
+
                         />
 
                         {/* Full Blog Description Editing */}
@@ -112,5 +112,11 @@ const Blog = ({ title, description, createdAt }) => {
         </>
     );
 }
+
+Blog.propTypes = {
+    title: PropTypes.string.isRequired,       // Validate 'title' prop as a string and mark it required
+    description: PropTypes.string.isRequired, // Validate 'description' prop as a string and mark it required
+    createdAt: PropTypes.string.isRequired,   // Validate 'createdAt' prop as a string and mark it required
+};
 
 export default Blog;

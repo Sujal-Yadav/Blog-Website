@@ -1,5 +1,5 @@
 require('dotenv').config()
-var jwt = require('jsonwebtoken');
+let jwt = require('jsonwebtoken');
 
 module.exports = {
     auth: (req, res, next) => {
@@ -9,9 +9,9 @@ module.exports = {
         if (!authHeader) {
             return res.status(403).json({msg: "Missing auth header"});
         }
-        const decoded = jwt.verify(authHeader, process.env.JWT_SECRET);
-        if (decoded && decoded.id) {
-            req.userId = decoded.id;
+        const userId = jwt.verify(authHeader, process.env.JWT_SECRET);
+        if (userId && userId.id) {
+            req.userId = userId.id;
             next()
         } else {
             return res.status(403).json({msg: "Incorrect token"});

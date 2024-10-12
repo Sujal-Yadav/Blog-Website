@@ -10,6 +10,7 @@ export default function Profile(props) {
     const [uploading, setUploading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
+    const buttonText = uploading ? 'Uploading...' : image ? 'Upload Image' : 'Select Image';
     // const navigate = useNavigate();
     const fileInputRef = useRef(null);
 
@@ -97,7 +98,7 @@ export default function Profile(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         setSaving(true);
-        
+
         try {
             setTimeout(async () => {
                 await axios.post('http://localhost:3000/updateUserDetails', userDetails, {
@@ -105,7 +106,7 @@ export default function Profile(props) {
                         'Content-Type': 'application/json',
                         "Authorization": localStorage.getItem('token'),
                     },
-                });        
+                });
                 setSaving(false);
             }, 3000);
         } catch (err) {
@@ -148,7 +149,7 @@ export default function Profile(props) {
                         <ToastContainer />
                         <div className="flex justify-between">
                             <div className="text-black dark:text-white text-4xl py-5">User Setting</div>
-                            
+
                         </div>
 
                     </div>
@@ -181,7 +182,7 @@ export default function Profile(props) {
                                     </svg></output> : <svg className="w-[20px] h-[20px] mr-1 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                         <path fillRule="evenodd" d="M12 3a1 1 0 0 1 .78.375l4 5a1 1 0 1 1-1.56 1.25L13 6.85V14a1 1 0 1 1-2 0V6.85L8.78 9.626a1 1 0 1 1-1.56-1.25l4-5A1 1 0 0 1 12 3ZM9 14v-1H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-4v1a3 3 0 1 1-6 0Zm8 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clipRule="evenodd" />
                                     </svg>}
-                                    {(uploading ? 'Uploading...' : image) ? 'Upload Image' : 'Select Image'}
+                                    <span>{buttonText}</span>
                                 </button>
                                 <span className="mx-4 my-2 text-sm dark:text-orange-200">
                                     * Please re-click the button to upload the profile photo.

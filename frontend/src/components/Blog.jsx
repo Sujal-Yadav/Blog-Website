@@ -1,11 +1,10 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
-const Blog = ({ title, description, createdAt }) => {
+const Blog = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editedTitle, setEditedTitle] = useState(title);
-    const [editedDescription, setEditedDescription] = useState(description);
+    const [editedTitle, setEditedTitle] = useState(props.title);
+    const [editedDescription, setEditedDescription] = useState(props.description);
     const [loading, setLoading] = useState(false);
 
     const openModal = (e) => {
@@ -37,14 +36,14 @@ const Blog = ({ title, description, createdAt }) => {
         }
     };
 
-    const formattedDate = format(new Date(createdAt), 'PPp');
+    const formattedDate = format(new Date(props.createdAt), 'PPp');
     return (
         <>
             <div className="md:col-span-1 col-span-2 p-2  cursor-pointer">
                 <div className="flex flex-col justify-between bg-gray-100 border border-gray-200 rounded-md shadow dark:bg-gray-800 hover:bg-gray-200 outline-2 hover:outline-slate-400 dark:border-gray-700 h-60">
                     <div className='p-5 flex-grow overflow-hidden'>
                         <div className='flex justify-between items-center'>
-                            <div className="mb-2 text-2xl font-bold text-black dark:text-white line-clamp-none">{title}</div>
+                            <div className="mb-2 text-2xl font-bold text-black dark:text-white line-clamp-none">{props.title}</div>
 
                             <button type="button" onClick={openModal} className="h-6 w-6">
                                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -53,7 +52,7 @@ const Blog = ({ title, description, createdAt }) => {
                             </button>
 
                         </div>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-none break-words">{description}</p>
+                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-none break-words">{props.description}</p>
                     </div>
                     <div className='relative '>
                         <div className='text-sm absolute dark:text-gray-400 right-0 bottom-0 px-6 py-4'>{formattedDate}</div>
@@ -76,7 +75,7 @@ const Blog = ({ title, description, createdAt }) => {
                 </div>
             </div>
             {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={(e) => e.stopPropagation()}>
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl">
                         <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">Edit Blog</h2>
 

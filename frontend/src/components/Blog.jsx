@@ -1,10 +1,11 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Blog = (props) => {
+const Blog = ({ title, description, createdAt }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editedTitle, setEditedTitle] = useState(props.title);
-    const [editedDescription, setEditedDescription] = useState(props.description);
+    const [editedTitle, setEditedTitle] = useState(title);
+    const [editedDescription, setEditedDescription] = useState(description);
     const [loading, setLoading] = useState(false);
 
     const openModal = (e) => {
@@ -36,14 +37,14 @@ const Blog = (props) => {
         }
     };
 
-    const formattedDate = format(new Date(props.createdAt), 'PPp');
+    const formattedDate = format(new Date(createdAt), 'PPp');
     return (
         <>
             <div className="md:col-span-1 col-span-2 p-2  cursor-pointer">
                 <div className="flex flex-col justify-between bg-gray-100 border border-gray-200 rounded-md shadow dark:bg-gray-800 hover:bg-gray-200 outline-2 hover:outline-slate-400 dark:border-gray-700 h-60">
                     <div className='p-5 flex-grow overflow-hidden'>
                         <div className='flex justify-between items-center'>
-                            <div className="mb-2 text-2xl font-bold text-black dark:text-white line-clamp-none">{props.title}</div>
+                            <div className="mb-2 text-2xl font-bold text-black dark:text-white line-clamp-none">{title}</div>
 
                             <button type="button" onClick={openModal} className="h-6 w-6">
                                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -52,7 +53,7 @@ const Blog = (props) => {
                             </button>
 
                         </div>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-none break-words">{props.description}</p>
+                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-none break-words">{description}</p>
                     </div>
                     <div className='relative '>
                         <div className='text-sm absolute dark:text-gray-400 right-0 bottom-0 px-6 py-4'>{formattedDate}</div>
@@ -86,7 +87,7 @@ const Blog = (props) => {
                             onChange={(e) => setEditedTitle(e.target.value)}
                             className="w-full p-2 mb-4 border rounded dark:bg-gray-700 dark:text-white"
                             placeholder="Title"
-                            
+
                         />
 
                         {/* Full Blog Description Editing */}
@@ -111,5 +112,11 @@ const Blog = (props) => {
         </>
     );
 }
+
+Blog.propTypes = {
+    title: PropTypes.string.isRequired,       // Validate 'title' prop as a string and mark it required
+    description: PropTypes.string.isRequired, // Validate 'description' prop as a string and mark it required
+    createdAt: PropTypes.string.isRequired,   // Validate 'createdAt' prop as a string and mark it required
+};
 
 export default Blog;

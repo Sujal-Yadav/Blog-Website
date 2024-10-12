@@ -4,11 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
-    const [blogs, setBlogs] = useState([{
-        title: '',
-        description: '',
-        createdAt: Date()
-    }]);
+    const [blogs, setBlogs] = useState([]);
 
     useEffect(() => {
         async function handleBlog() {
@@ -42,11 +38,11 @@ const HomePage = () => {
                 </div>
                 <div className="text-7xl flex justify-center dark:text-white font-bold">Blogs to read</div>
                 <div className='md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid lg:grid-cols-2 gap-6 m-20'>
-                    {blogs.map((blog, index) => (
-                        <Link to={`/blogPage/${blog._id}`} key={index}>
+                    {blogs.map((blog) => 
+                        <Link to={`/blogPage/${blog._id}`} key={blog._id}>
                             <Blog title={blog.title} description={blog.description} createdAt={blog.createdAt} />
                         </Link>
-                    ))}
+                    )}
                 </div>
 
 

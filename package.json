@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "sonarqube-scanner": "^4.2.3"
+  },
+  "scripts": {
+    "sonar": "node ./node_modules/sonarqube-scanner/bin/sonar-scanner"
+  }
+}

@@ -52,7 +52,8 @@ function UserBlogs() {
             }, 3000);
         }
         loadUserBlogs();
-    }, [])
+    }, []);
+
 
     return (
         <div>
@@ -98,12 +99,15 @@ function UserBlogs() {
                     </div>
                 </div>
             ) : (
-                <div className='md:ml-64 mx-auto md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid shadow lg:grid-cols-2 gap-6 m-6'>
-                    {blogs.map((blog, index) =>
-                        <Link key={index} to={`/userBlogs/${userId}/blogPage/${blog._id}`}>
-                            <Blog title={blog.title} description={blog.description} createdAt={blog.createdAt} />
-                        </Link>
-                    )}
+                <div className="md:ml-64 mx-auto md:grid md:grid-cols-2 grid grid-cols-2 md:p-4 p-2 lg:grid shadow lg:grid-cols-2 gap-6 m-6">
+                    {blogs.map((blog, index) => (
+                        <div key={index}>
+                            {/* Wrap Blog card with Link, but keep Edit button outside to avoid triggering redirection */}
+                            <Link to={`/userBlogs/${userId}/blogPage/${blog._id}`}>
+                                <Blog title={blog.title} description={blog.description} createdAt={blog.createdAt} blogId={blog._id}/>
+                            </Link>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

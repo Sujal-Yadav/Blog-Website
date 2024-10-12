@@ -1,27 +1,20 @@
-name: SonarQube Scan
-
+name: Build
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
-
+    types: [opened, synchronize, reopened]
 jobs:
-  sonar:
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
         with:
-          node-version: '16'  # Use appropriate version for your project
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run SonarQube Scanner
-        run: npm run sonar
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Add this token in your GitHub repository secrets
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

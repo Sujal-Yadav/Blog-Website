@@ -29,6 +29,7 @@ export default function Navbar(props) {
     resetForm()
     setIsModalOpen(false);
   };
+  
   function handleNavbar() {
     setNavbar(!navbar);
   }

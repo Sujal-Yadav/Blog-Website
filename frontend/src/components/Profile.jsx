@@ -10,8 +10,15 @@ export default function Profile(props) {
     const [uploading, setUploading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-    const buttonText = uploading ? 'Uploading...' : image ? 'Upload Image' : 'Select Image';
-    // const navigate = useNavigate();
+    let buttonText;
+
+    if (uploading) {
+      buttonText = 'Uploading...';
+    } else if (image) {
+      buttonText = 'Upload Image';
+    } else {
+      buttonText = 'Select Image';
+    }    // const navigate = useNavigate();
     const fileInputRef = useRef(null);
 
     const handleButtonClick = () => {
